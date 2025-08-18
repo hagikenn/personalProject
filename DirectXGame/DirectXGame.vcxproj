@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapChipField.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -258,6 +259,7 @@
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MapChipField.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="Stage.h" />
