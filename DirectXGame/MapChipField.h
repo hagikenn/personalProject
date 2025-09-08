@@ -1,10 +1,6 @@
 #pragma once
-#include <cstdint>
-#include <math.h>
-#include <string>
-#include <vector>
-#include <assert.h>
-#include "Vector3.h"
+#include <KamataEngine.h>
+using namespace KamataEngine;
 
 enum class MapChipType {
 	kBlank,
