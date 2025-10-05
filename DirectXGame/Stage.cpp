@@ -24,8 +24,8 @@ void Stage::Update() {
 
 void Stage::Draw() {
 	
-	sprite_[0]->Draw();
-	sprite_[1]->Draw();
+	/*sprite_[0]->Draw();
+	sprite_[1]->Draw();*/
 
 
 }

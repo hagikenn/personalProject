@@ -28,6 +28,8 @@ void GameScene::Initialize() {
 	stage_->Initialize();
 
 	camera_.Initialize();
+
+	mapChipField_.LoadMapChipCsv("Resources/mapchip.csv");
 }
 
 void GameScene::Update() {
@@ -37,6 +39,14 @@ void GameScene::Update() {
 	stage_->Update();
 	// カメラの更新
 	camera_.Map();
+
+	//Vector3 playerPos = player_->GetWorldTransform().translation_;
+	//auto indexSet = mapChipField_.GetMapChipIndexSetByPosition(playerPos);
+	//MapChipType type = mapChipField_.GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
+
+	//if (type == MapChipType::kBlock) {
+	//    // ブロック上にいる処理
+	//}
 }
 
 void GameScene::Draw() {
