@@ -29,7 +29,7 @@ void GameScene::Initialize() {
 
 	camera_.Initialize();
 
-	mapChipField_.LoadMapChipCsv("Resources/mapchip.csv");
+	mapChipField_.Initialize("Resources/mapchip.csv");
 }
 
 void GameScene::Update() {
@@ -64,6 +64,10 @@ void GameScene::Draw() {
 
 	// 3Dモデル描画前処理
 	Model::PreDraw();
+
+	// マップチップの描画を追加
+	mapChipField_.Draw(camera_);
+
 	player_->Draw(camera_);
 	// 3Dモデル描画後処理
 	Model::PostDraw();

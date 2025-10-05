@@ -1,44 +1,67 @@
 #pragma once
 #include <KamataEngine.h>
+#include <memory>
+#include <string>
+#include <vector>
+
 using namespace KamataEngine;
 
 enum class MapChipType {
-	kBlank,
-	kBlock,
-};
-
-struct MapChipData {
-	std::vector<std::vector<MapChipType>> data;
+	Blank,
+	Block,
+	Goal,
 };
 
 class MapChipField {
-
 public:
-	struct IndexSet {
-		uint32_t xIndex;
-		uint32_t yIndex;
+	struct Rect {
+		float left;
+		float top;
+		float right;
+		float bottom;
+	};
+	struct MapChipIndex {
+		int x;
+		int y;
 	};
 
-	struct Rect {
-		float left;   // 左端
-		float right;  // 右端
-		float bottom; // 下端
-		float top;    // 上端
-	};
-	void ResetMapChipData();
-	void LoadMapChipCsv(const std::string& filePath);
-	MapChipType GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex);
-	Vector3 GetMapChipPositionByIndex(uint32_t xIndex, uint32_t yIndex);
-	IndexSet GetMapChipIndexSetByPosition(const Vector3& position);
-	Rect GetRectByIndex(uint32_t xIndex, uint32_t yIndex);
-	uint32_t GetNumBlockVirtical();
-	uint32_t GetNumBlockHorizontal();
+	~MapChipField();
+
+	void Initialize(std::string file);
+
+	void Update();
+
+	void Draw(const Camera& camera);
+
+	MapChipType GetMapChipType(const Vector3& position);
+
+	MapChipType GetMapChipType(const MapChipIndex& index);
+
+	Rect GetMapRect(const Vector3& position);
+
+	MapChipIndex GetMapChipIndex(const Vector3& position);
+
+	int GetMaxVerticalMapSize() { return static_cast<int>(mapChipData.size()); }
+	int GetMaxHorizontalMapSize() { return static_cast<int>(mapChipData[0].size()); }
+
+	float GetMapChipBlockSize() { return BlockSize; }
 
 private:
-	static inline const float kBlockWidth = 1.0f;
-	static inline const float kBlockHeight = 1.0f;
+	void MapCreate(std::string file);
 
-	static inline const uint32_t kNumBlockVirtical = 20;
-	static inline const uint32_t kNumBlockHorizontal = 100;
-	MapChipData mapChipData_;
+	Vector3 GetMapPos(const MapChipIndex& index);
+	void CreateModel();
+
+private:
+	std::vector<std::vector<MapChipType>> mapChipData;
+	std::vector<std::vector<WorldTransform*>> mapChipWorldTransforms_;
+
+	std::string directory = "";
+
+	Model* blockModel;
+	Model* GoalModel;
+
+	float BlockSize = 2.0f;
+
+	Vector2 maxMapSize;
 };
