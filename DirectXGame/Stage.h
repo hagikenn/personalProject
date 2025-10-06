@@ -1,6 +1,7 @@
 #pragma once
 #include "KamataEngine.h"
 using namespace KamataEngine;
+#include"Player.h"
 
 class Stage {
 public:
@@ -14,5 +15,7 @@ private:
 	Sprite* sprite_[2] = {nullptr,nullptr};
 	float scrollSpeed_ = 2.0f;           // スクロール速度
 	float posX_[2] = {0.0f,1280.0f};
+
+	Player* player_ = nullptr;
 
 };
