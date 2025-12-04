@@ -28,5 +28,5 @@ private:
 	// 重力加速度
 	float gravity = -0.1f; 
 	// 地面の高さ
-	float ground[2] = {-30.0f,-13.0f,};
+	float ground[2] = {-30.0f,-18.0f,};
 };

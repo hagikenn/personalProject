@@ -22,7 +22,7 @@ void GameScene::Initialize() {
     // 自キャラの生成  
     player_ = new Player();  
     // 自キャラの初期化  
-    player_->Initialize("cube");
+    player_->Initialize("player");
 
 	stage_ = new Stage();
 	stage_->Initialize();
@@ -30,6 +30,10 @@ void GameScene::Initialize() {
 	camera_.Initialize();
 
 	mapChip_.Initialize();
+	// マップの大きさ取得
+	Vector2 mapSize = mapChip_.GetMaxMapSize();
+	// 画面中央に置きたい場合（例：画面中心が(0,0)なら左下を -mapSize/2 する）
+	mapChip_.SetOrigin(Vector2{-mapSize.x / 2.0f, -mapSize.y / 2.0f});
 }
 
 void GameScene::Update() {

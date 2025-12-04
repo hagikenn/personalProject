@@ -39,6 +39,14 @@ void MapChip::CreateStageObjectes() {
 }
 
 void MapChip::CreateStageWorldTransform() {
+	// 既存データがあれば解放してクリア（安全策）
+	for (auto& line : stageworldtransforms_) {
+		for (auto* wt : line) {
+			delete wt;
+		}
+	}
+	stageworldtransforms_.clear();
+
 	for (size_t y = 0; y < stageBlocks_.size(); ++y) {
 		stageworldtransforms_.push_back(std::vector<WorldTransform*>());
 		for (size_t x = 0; x < stageBlocks_[y].size(); ++x) {
@@ -47,7 +55,12 @@ void MapChip::CreateStageWorldTransform() {
 			} else {
 				WorldTransform* worldTransform = new WorldTransform();
 				worldTransform->Initialize();
-				worldTransform->translation_ = {(BlockSize * 0.5f) + (BlockSize * x), (BlockSize * 0.5f) + (BlockSize * (stageBlocks_.size() - 1 - y)), 0.0f};
+				// 変更：originOffset_ を加算して表示位置を調整できるようにする
+				worldTransform->translation_ = {
+					originOffset_.x + (BlockSize * -18.0f) + (BlockSize * static_cast<float>(x)),
+					originOffset_.y + (BlockSize * -10.0f) + (BlockSize * static_cast<float>(stageBlocks_.size() - 1 - y)),
+					0.0f
+				};
 				worldTransform->UpdateMatrix();
 				stageworldtransforms_[y].push_back(worldTransform);
 			}
@@ -55,21 +68,14 @@ void MapChip::CreateStageWorldTransform() {
 	}
 }
 
-void MapChip::Update() {
-
-}
+void MapChip::Update() {}
 
 void MapChip::Draw(const Camera* camera) {
-	int y = 0; // 行のインデックスを初期化
 	for (const auto& line : stageworldtransforms_) {
-		int x = 0; // 列のインデックスを初期化
 		for (const auto& worldTransform : line) {
 			if (worldTransform != nullptr) {
-				// cameraはポインタなので参照渡しに変換
 				blockModel->Draw(*worldTransform, *camera);
 			}
-			x++;
 		}
-		y++;
 	}
 }

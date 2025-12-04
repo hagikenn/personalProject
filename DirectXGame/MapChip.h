@@ -13,6 +13,9 @@ public:
 	void Update();
 	void Draw(const Camera* camera);
 
+	void SetOrigin(const Vector2& origin) { originOffset_ = origin; }
+	Vector2 GetMaxMapSize() const { return maxMapSize; }
+
 private:
 	void CreateStageObjectes();
 	void CreateStageWorldTransform();
@@ -26,5 +29,7 @@ private:
 
 	Vector2 maxMapSize;
 
-	static inline const float BlockSize = 2.0;
+	Vector2 originOffset_{0.0f, 0.0f};
+
+	static inline const float BlockSize = 2.0f;
 };
