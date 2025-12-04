@@ -36,9 +36,6 @@
     <ClCompile Include="main.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="MapChipField.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
@@ -51,11 +48,11 @@
     <ClCompile Include="scene\GameScene.cpp">
       <Filter>ソースファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="MapChip.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MapChipField.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
@@ -64,6 +61,9 @@
     </ClInclude>
     <ClInclude Include="scene\GameScene.h">
       <Filter>ヘッダーファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapChip.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

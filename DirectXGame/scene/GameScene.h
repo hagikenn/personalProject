@@ -3,8 +3,7 @@
 using namespace KamataEngine;
 #include "../Player.h"
 #include"../Stage.h"
-#include "../MapChipField.h"
-
+#include "../MapChip.h"
 
 /// <summary>
 /// ゲームシーン
@@ -47,7 +46,7 @@ private: // メンバ変数
 	//ステージ
 	Stage* stage_ = nullptr;
 	// マップチップフィールド
-	MapChipField mapChipField_;
+	MapChip mapChip_;
 	//モデル
 	Model* model_ = nullptr;
 	// カメラ
