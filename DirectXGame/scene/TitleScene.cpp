@@ -52,8 +52,10 @@ void TitleScene::Initialize() {
 void TitleScene::Update() {
 
 	// SPACEキーが押されたらフェードアウトを開始（ゲームシーンへ遷移する合図）
-	if (Input::GetInstance()->PushKey(DIK_SPACE)) {
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && IsNextScene_==false) {
+		
 		fade_->Start(Fade::Status::FadeOut, 1);
+		IsNextScene_ = true;
 	}
 
 	// フェードアウトが終了したらシーン終了フラグを立てる（呼び出し元でシーン切替）

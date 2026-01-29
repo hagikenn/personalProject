@@ -43,6 +43,8 @@ private:
 
 	bool finished_ = false;
 
+	bool IsNextScene_ = false;
+
 	//画面フェード
 	Fade* fade_ = nullptr;
 
