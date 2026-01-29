@@ -26,6 +26,7 @@ void GameScene::Initialize() {
 
 	stage_ = new Stage();
 	stage_->Initialize();
+	stage_->SpawnSquare();
 
 	camera_.Initialize();
 
@@ -35,6 +36,7 @@ void GameScene::Initialize() {
 	// 画面中央に置きたい場合（例：画面中心が(0,0)なら左下を -mapSize/2 する）
 	mapChip_.SetOrigin(Vector2{-mapSize.x / 2.0f, -mapSize.y / 2.0f});
 }
+
 
 void GameScene::Update() {
 	// 自キャラの更新
