@@ -35,6 +35,24 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
+
+
+	// シーンのフェーズ
+	enum class Phase {
+		kFadeIn,  // フェードイン
+		kPlay,    // ゲームプレイ
+		kDeath,   // デス演出
+		kFadeOut, // フェードアウト
+	};
+
+	Phase phase_;
+
+	void ChangePhase();
+
+	bool finished_ = false;
+
+	bool IsFinished() const { return finished_; }
+
 	
 private: // メンバ変数
 	

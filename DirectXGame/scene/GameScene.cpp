@@ -78,3 +78,26 @@ void GameScene::Draw() {
 	// 3Dモデル描画後処理
 	Model::PostDraw();
 }
+
+void GameScene::ChangePhase() {
+	switch (phase_) {
+	case Phase::kPlay:
+		// プレイヤーが死亡したら死亡演出フェーズに遷移する
+		if (player_->IsDead()) {
+			// フェーズを死亡に切り替え
+			phase_ = Phase::kDeath;
+			// 自キャラの座標を取得して死亡演出の位置にする
+			const Vector3& deathParticlesPosition = player_->GetWorldPosition();
+			// 新しい死亡演出オブジェクトを生成して初期化する
+			deathParticles_ = new DeathParticles;
+			deathParticles_->Initialize(modelParticles_, &viewProjection_, deathParticlesPosition);
+		}
+		break;
+	case Phase::kDeath:
+		// 死亡演出が終了したらシーン終了フラグを立てる
+		if (deathParticles_ && deathParticles_->IsFinished()) {
+			finished_ = true;
+		}
+		break;
+	}
+}
