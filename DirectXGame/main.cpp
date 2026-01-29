@@ -2,6 +2,74 @@
 #include <Windows.h>
 using namespace KamataEngine;
 #include "scene/GameScene.h"
+#include "scene/TitleScene.h"
+#include <imgui.h>
+
+GameScene* gameScene = nullptr;
+TitleScene* titleScene = nullptr;
+
+
+enum class Scene {
+	kUnknown = 0,
+	kTitle,
+	kGame,
+
+};
+
+Scene scene = Scene::kTitle;
+
+void ChangeScene() {
+
+	switch (scene) {
+	case Scene::kTitle:
+		if (titleScene->IsFinished()) {
+			scene = Scene::kGame;
+			delete titleScene;
+			titleScene = nullptr;
+			gameScene = new GameScene;
+			gameScene->Initialize();
+		}
+		break;
+	/*case Scene::kGame:
+		if (gameScene->IsFinished()) {
+
+			scene = Scene::kTitle;
+			delete gameScene;
+			gameScene = nullptr;
+			titleScene = new TitleScene;
+			titleScene->Initialize();
+		}
+		break;*/
+	}
+}
+
+void UpdateScene() {
+
+	switch (scene) {
+	case Scene::kTitle:
+		titleScene->Update();
+
+		break;
+
+	/*case Scene::kGame:
+		gameScene->Update();
+		break;*/
+	}
+}
+
+void DrawScene() {
+
+	switch (scene) {
+	case Scene::kTitle:
+		titleScene->Draw();
+
+		break;
+
+	/*case Scene::kGame:
+		gameScene->Draw();
+		break;*/
+	}
+}
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
@@ -12,9 +80,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	// ゲームシーンのインスタンス生成
-	GameScene* gameScene = new GameScene();
+	//GameScene* gameScene = new GameScene();
 	// ゲームシーンの初期化
-	gameScene->Initialize();
+	scene = Scene::kTitle;
+	titleScene = new TitleScene;
+	titleScene->Initialize();
 
 	// メインループ
 	while (true) {
@@ -23,15 +93,43 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		if (KamataEngine::Update()) {
 			break;
 		}
+		// ゲームシーンの毎フレーム処理
+		ChangeScene();
+		UpdateScene();
+
 		// ゲームシーンの更新
-		gameScene->Update();
+		//gameScene->Update();
 
 		// 描画開始
 		dxCommon->PreDraw();
 
-		// ゲームシーンの描画
-		gameScene->Draw();
+		//// --- ImGui: 現在のシーンを表示 ---
+		//// ImGui が有効ならウィンドウを表示、無ければデバッグ出力のみ
+		//if (ImGui::GetCurrentContext()) {
+		//	ImGui::Begin("Debug: Scene");
+		//	const char* sceneName = "Unknown";
+		//	switch (scene) {
+		//	case Scene::kTitle:
+		//		sceneName = "Title";
+		//		break;
+		//	case Scene::kGame:
+		//		sceneName = "Game";
+		//		break;
+		//	default:
+		//		sceneName = "Unknown";
+		//		break;
+		//	}
+		//	ImGui::Text("Current Scene: %s", sceneName);
+		//	ImGui::End();
+		//} else {
+		//	// GUIコンテキストが無ければ Visual Studio 出力に情報を送る
+		//	char buf[64];
+		//	sprintf_s(buf, "ImGui context not found. Scene=%d\n", static_cast<int>(scene));
+		//	OutputDebugStringA(buf);
+		//}
 
+		// ゲームシーンの描画
+		DrawScene();
 		// 描画終了
 		dxCommon->PostDraw();
 	}
