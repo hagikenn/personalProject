@@ -6,7 +6,7 @@
 // タイトルシーンの実装。
 // モデル読み込み・初期配置・更新（アニメーション、入力、フェード）・描画を行う。
 
-TitleScene::~TitleScene() { 
+TitleScene::~TitleScene() {
 	// 動的確保したリソースの解放
 	delete modelPlayer_;
 	delete modelTitle_;
@@ -16,11 +16,12 @@ TitleScene::~TitleScene() {
 void TitleScene::Initialize() {
 
 	// スプライト用テクスチャをロード（ファイル名はプロジェクトに合わせて変更）
-	titleTextureHandle_ = TextureManager::Load("../Resources/title.png");
+	titleTextureHandle_ = TextureManager::Load("../Resources/title/title.png");
 	// 画面中心に生成（画面サイズに合わせて調整）
 	titleSprite_ = Sprite::Create(titleTextureHandle_, {0.0f, 0.0f});
 
-	
+	ruleTextureHandle_ = TextureManager::Load("../Resources/title/rule_resource.png");
+	ruleSprite_ = Sprite::Create(ruleTextureHandle_, {0.0f, 0.0f});
 
 	// ビュー射影行列の初期化（カメラ行列等）
 	camera_.Initialize();
@@ -52,10 +53,16 @@ void TitleScene::Initialize() {
 void TitleScene::Update() {
 
 	// SPACEキーが押されたらフェードアウトを開始（ゲームシーンへ遷移する合図）
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && IsNextScene_==false) {
-		
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && IsNextScene_ == false) {
+
 		fade_->Start(Fade::Status::FadeOut, 1);
 		IsNextScene_ = true;
+	}
+
+	// ESCキーが押されたら説明資料へ遷移する
+	if (Input::GetInstance()->TriggerKey(DIK_ESCAPE)) {
+
+		isExplanation_ = !isExplanation_;
 	}
 
 	// フェードアウトが終了したらシーン終了フラグを立てる（呼び出し元でシーン切替）
@@ -63,10 +70,7 @@ void TitleScene::Update() {
 		finished_ = true;
 	}
 
-	
-		
 	titleSprite_->SetPosition({0.0f, 0.0f});
-	
 
 	// フェード更新（内部で時間経過処理を行う）
 	fade_->Update();
@@ -82,8 +86,11 @@ void TitleScene::Draw() {
 
 	// スプライト描画（タイトルスプライト・フェードなど）
 	Sprite::PreDraw(commandList);
-	if (titleSprite_)
-		titleSprite_->Draw();
+
+	titleSprite_->Draw();
+	if (isExplanation_) {
+		ruleSprite_->Draw();
+	}
 	fade_->Draw(commandList);
 	Sprite::PostDraw();
 

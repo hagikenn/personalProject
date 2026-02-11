@@ -39,11 +39,16 @@ private:
 	Sprite* titleSprite_ = nullptr;
 	uint32_t titleTextureHandle_ = 0;
 
+	Sprite* ruleSprite_ = nullptr;
+	uint32_t ruleTextureHandle_ = 0;
+
 	float counter_ = 0.0f;
 
 	bool finished_ = false;
 
 	bool IsNextScene_ = false;
+	// 説明表示中かどうか
+	bool isExplanation_ = false;
 
 	//画面フェード
 	Fade* fade_ = nullptr;
