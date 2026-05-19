@@ -16,9 +16,7 @@ enum class Scene {
 
 };
 
-Scene scene = Scene::kTitle;
-
-void ChangeScene() {
+void ChangeScene(Scene scene) {
 
 	switch (scene) {
 	case Scene::kTitle:
@@ -30,20 +28,20 @@ void ChangeScene() {
 			gameScene->Initialize();
 		}
 		break;
-	/*case Scene::kGame:
-		if (gameScene->IsFinished()) {
+		/*case Scene::kGame:
+		    if (gameScene->IsFinished()) {
 
-			scene = Scene::kTitle;
-			delete gameScene;
-			gameScene = nullptr;
-			titleScene = new TitleScene;
-			titleScene->Initialize();
-		}
-		break;*/
+		        scene = Scene::kTitle;
+		        delete gameScene;
+		        gameScene = nullptr;
+		        titleScene = new TitleScene;
+		        titleScene->Initialize();
+		    }
+		    break;*/
 	}
 }
 
-void UpdateScene() {
+void UpdateScene(Scene scene) {
 
 	switch (scene) {
 	case Scene::kTitle:
@@ -51,13 +49,13 @@ void UpdateScene() {
 
 		break;
 
-	/*case Scene::kGame:
-		gameScene->Update();
-		break;*/
+		/*case Scene::kGame:
+		    gameScene->Update();
+		    break;*/
 	}
 }
 
-void DrawScene() {
+void DrawScene(Scene scene) {
 
 	switch (scene) {
 	case Scene::kTitle:
@@ -65,11 +63,12 @@ void DrawScene() {
 
 		break;
 
-	/*case Scene::kGame:
-		gameScene->Draw();
-		break;*/
+		/*case Scene::kGame:
+		    gameScene->Draw();
+		    break;*/
 	}
 }
+
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
@@ -82,7 +81,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// ゲームシーンのインスタンス生成
 	//GameScene* gameScene = new GameScene();
 	// ゲームシーンの初期化
-	scene = Scene::kTitle;
+	Scene scene = Scene::kTitle;
 	titleScene = new TitleScene;
 	titleScene->Initialize();
 
@@ -94,8 +93,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			break;
 		}
 		// ゲームシーンの毎フレーム処理
-		ChangeScene();
-		UpdateScene();
+		ChangeScene(scene);
+		UpdateScene(scene);
 
 		// ゲームシーンの更新
 		//gameScene->Update();
@@ -129,7 +128,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		//}
 
 		// ゲームシーンの描画
-		DrawScene();
+		DrawScene(scene);
 		// 描画終了
 		dxCommon->PostDraw();
 	}
@@ -144,3 +143,4 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	return 0;
 }
+
